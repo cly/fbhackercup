@@ -44,34 +44,27 @@ for (var i = 0, ii = num_tests; i < ii; ++i) {
         m_values.push(m_prev)
     }
 
-    var sorted_m_values = _(m_values).sort(function(l, r) {return +l - +r})
-    var spots = []
-    var spots_count = 0
-    var prev_value = -1
-    for (var j = 0, jj = sorted_m_values.length; j < jj; ++j) {
-        spots_count = sorted_m_values[j] - prev_value - 1
-        if (spots.length > 0) {
-            spots.push(spots_count + spots[spots.length - 1])
-        } else {
-            spots.push(spots_count)
+    for (var x = k, xx = n; x < xx; ++x) {
+        var sorted_m_values = _(m_values).chain().unique().sortBy(function(v) {return v}).value()
+        var min
+        for (var j = 0, jj = sorted_m_values.length; j < jj; ++j) {
+            if (sorted_m_values[j] !== j) {
+                if (j > 0) {
+                    min = sorted_m_values[j - 1] + 1
+                } else {
+                    min = 0
+                }
+                break
+            }
         }
-        prev_value = sorted_m_values[j]
+
+        m_values.push(min)
+        m_values.splice(0, 1)
     }
 
-    var offset = spots.length
-    for (var j = 0, jj = spots.length; j < jj; ++j) {
-        if (n_prime < spots[j]) {
-            offset = j
-            break
-        }
-    }
-
-    var nth = n_prime + offset
-
-
+    nth = min
     var output = 'Case #' + (i + 1) + ': ' + nth
-    console.log(i, ii, JSON.stringify(sorted_m_values), JSON.stringify(spots), nth, output)
-    process.exit();
+    console.log(i, ii, n_prime, nth, output)
     output_file_lines.push(output)
 }
 
