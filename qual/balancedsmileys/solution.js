@@ -73,6 +73,8 @@ for (var i = 0, ii = num_lines; i < ii; ++i) {
                 balanced = false
                 break
             }
+        } else {
+            prev_colon = false
         }
     }
 
