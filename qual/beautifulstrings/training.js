@@ -94,6 +94,34 @@ for (var i = 0, ii = data.length; i < ii; ++i) {
         })
     })
 
+    // Sort it by most frequently occurring letter first
+    var sorted_count_arr_incr = count_arr.sort(function(l, r) {
+        return l.count - r.count
+    })
+
+    sorted_count_arr_incr.forEach(function(letter, i) {
+        var other_minimum_sum = 0
+        var max_num = 26
+
+        // Find max sum of other numbers
+        sorted_count_arr_incr.forEach(function(inner_letter, inner_i) {
+            if (letter.letter !== inner_letter.letter) {
+                other_minimum_sum += inner_letter.count * max_num
+                max_num = max_num - 1
+            }
+        })
+
+        // Filter impossible cases!
+        var num_lte = (line.y - other_minimum_sum)/letter.count
+        possible_values.forEach(function(possible_letter) {
+            if (possible_letter.letter === letter.letter) {
+                possible_letter.possible = possible_letter.possible.filter(function(v) {
+                    return v <= num_lte
+                })
+            }
+        })
+    })
+
 /*
     var max_beauty = 26
     sorted_count_arr = sorted_count_arr.map(function(v) {
