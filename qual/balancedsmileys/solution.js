@@ -16,14 +16,6 @@ var input_file_name = process.argv[2]
   , num_lines = +lines.shift()
   , letters_re = /[a-z]/
 
-var no_positives = function(arr) {
-    // If more closing brackets than open brackets
-    var positives = arr.filter(function(v) {
-        return v >= 0
-    })
-    return positives.length === 0
-}
-
 var no_zero = function(arr) {
     // If more closing brackets than open brackets
     var zeros = arr.filter(function(v) {
@@ -73,7 +65,11 @@ for (var i = 0, ii = num_lines; i < ii; ++i) {
                 })
             }
 
-            if (no_positives(possible_paren)) {
+            possible_paren = possible_paren.filter(function(v) {
+                return v >= 0
+            })
+
+            if (possible_paren.length === 0) {
                 balanced = false
                 break
             }
@@ -84,6 +80,7 @@ for (var i = 0, ii = num_lines; i < ii; ++i) {
         balanced = false
     }
 
+    console.log(i, ii, original_line, possible_paren, balanced)
     output_file_lines.push('Case #' + (i + 1) + ': ' + (balanced ? 'YES' : 'NO'))
 }
 
