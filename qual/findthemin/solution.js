@@ -44,22 +44,29 @@ for (var i = 0, ii = num_tests; i < ii; ++i) {
         m_values.push(m_prev)
     }
 
+    var sorted_m_values = _(m_values).chain().sortBy(function(v) {return v}).value()
     for (var x = k, xx = n; x < xx; ++x) {
-        var sorted_m_values = _(m_values).chain().unique().sortBy(function(v) {return v}).value()
         var min
+        var value = 0
         for (var j = 0, jj = sorted_m_values.length; j < jj; ++j) {
-            if (sorted_m_values[j] !== j) {
-                if (j > 0) {
-                    min = sorted_m_values[j - 1] + 1
-                } else {
-                    min = 0
-                }
+            if (j === 0 && sorted_m_values[j] > value) {
+                min = 0
                 break
+            } else if (sorted_m_values[j] > value + 1) {
+                break
+            } else {
+                value = sorted_m_values[j]
+                min = value + 1
             }
         }
-
         m_values.push(min)
-        m_values.splice(0, 1)
+        var rejected = m_values.splice(0, 1)
+
+        var insert_index = _.sortedIndex(sorted_m_values, min)
+        sorted_m_values.splice(insert_index, 0, min)
+
+        var delete_index = _.sortedIndex(sorted_m_values, rejected)
+        sorted_m_values.splice(delete_index, 1)
     }
 
     nth = min
