@@ -8,12 +8,17 @@ if (process.argv.length < 3) {
     process.exit()
 }
 
+var f = []
 function factorial(num) {
-    var result = bigint(1)
-    for (var i = bigint(2), ii = num.add(1); i.lt(ii); i = i.add(1)) {
-        result = result.mul(i)
+    if (num.toString() === '0' || num.toString() === '1') {
+        return bigint(1)
     }
-    return result
+
+    if (!_.isUndefined(f[num.toString()])) {
+        return f[num.toString()]
+    } else {
+        return f[num.toString()] = factorial(num.sub(1)).mul(num)
+    }
 }
 
 function choose(a, b) {
@@ -46,12 +51,11 @@ for (var i = 0, ii = num_tests; i < ii; ++i) {
     var sum = bigint(0)
     for (var j = k - 1, jj = n; j < jj; ++j) {
         var c = choose(bigint(j), bigint(k - 1))
-        var temp = c.mul(a[j]).mod(1000000007)
+        var temp = c.mul(a[j])
         sum = sum.add(temp)
     }
 
-    sum = sum.toNumber()
-
+    sum = sum.mod(1000000007).toNumber()
     var output = 'Case #' + (i + 1) + ': ' + sum
     console.log(i, ii, output)
     output_file_lines.push(output)
