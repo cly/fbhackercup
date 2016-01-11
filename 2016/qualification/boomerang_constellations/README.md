@@ -14,9 +14,11 @@ For the ith night, print a line containing "Case #i: " followed by the number of
 
 Constraints
 ===
+```
 1 ≤ T ≤ 50 
 1 ≤ N ≤ 2,000 
 -10,000 ≤ Xi, Yi ≤ 10,000 
+```
 
 Explanation of Sample
 ===
@@ -24,6 +26,7 @@ On the first night, every pair of stars is a unique distance apart, so there are
 
 Example input
 ===
+```
 5
 3
 0 0
@@ -52,11 +55,14 @@ Example input
 6 7
 7 8
 8 7
+```
 
 Example output
 ===
+```
 Case #1: 0
 Case #2: 4
 Case #3: 4
 Case #4: 3
 Case #5: 12
+```
