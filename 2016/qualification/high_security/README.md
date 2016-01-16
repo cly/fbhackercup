@@ -7,8 +7,11 @@ When viewed from above, the facility can be modeled as a grid G with 2 rows and 
 
 Guards may be potentially stationed in any of the empty cells. A guard can see not only their own cell, but also all contiguous empty cells in each of the 4 compass directions (up, down, left, and right) until the edge of the grid or a building. For example, in the grid below, the guard ("G") can see every cell marked with an asterisk ("*"):
 
+```
 .*.X.X..
 *G*****X
+```
+
 What is the minimum number of guards required such that every empty cell in the grid can be seen by at least one of them?
 
 Input
