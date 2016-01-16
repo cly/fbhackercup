@@ -78,8 +78,22 @@ Ideas
       ]
     - If length is 1:
         + Then, need to add 3 values.
+    - If length is 2:
+        + Find difference between 2 values. If <= 30, then require 2 more. If more than 30, then require 6 more. ie if it's 1 and 31, then [1, 11, 21, 31].
+    - If length is 3:
+        + Case: 1, 50, 100 // Need 9 more
+        + Case: 1, 2, 100 // Need 5 more
+        + Case: 1, 2, 22 // Need 1 more
+        + Case: 1, 99, 100 // Need 5 more
     - If length is 2 or more:
-        + Start from first value.
-        + Add 10 to each value until they connect, then continue until everything is connected.
-        + If the length now, is a multiple of 4, then done. Otherwise find nearest multiple of 4.
+        + For every pair of values, if difference is <= 10, then continue.
+        + If difference is <= 20, then add 1, and continue.
+        + If difference is <= 30, then add 2 and continue.
+        + If difference is > 30, then add 3 and continue.
+        + Take subset sum and total number of original values and find the next multiple of 4.
+    - Case [1, 100], difference is > 30, sum = 2 + 3 = 5, bump up to 8.
+    - Case [1, 50, 100], differnce is > 30, sum = 3 + 3. Second difference is > 30 sum = 3 + 3 + 3. Next multiple of 4 is 12 so we are at 9 more.
+    - Case [1, 2, 100], 2 - 1 <= 10. Sum = 3. Continue. 100 - 2 > 30. Sum = 3 + 3. Continue. Next multiple is 8.So need 5 more.
+    - Case [1, 99, 100], 99 - 1 > 30. Sum = 3 + 3. Continue. 100 - 99 <= 10. Continue. Next multiple is 8. So need 5 more.
+    - Case [1, 2, 22], 2 - 1 <= 10. Sum = 3. Continue. 22 - 2 <= 20, Sum = 3 + 1. Only need one more to complete it.
 
