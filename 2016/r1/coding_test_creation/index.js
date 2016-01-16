@@ -1,14 +1,14 @@
 var fs = require('fs')
 var path = require('path')
 
-if (process.argv.length !== 4) {
-    console.log( 'Usage: node index.js <input file name> <output file name>')
+if (process.argv.length !== 3) {
+    console.log( 'Usage: node index.js <input file name>')
     process.exit()
 }
 
 // Setup input and output files.
 var inputFileName = process.argv[2];
-var outputFileName = process.argv[3];
+var outputFileName = inputFileName + '.output.txt';
 
 var inputFileData = fs.readFileSync(path.join(__dirname, inputFileName), {encoding: 'utf8'})
 var outputFileData = ''
