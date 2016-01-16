@@ -63,3 +63,38 @@ Case #5: 3003
 
 Ideas
 ---
+- Should've paid more attention in class. This seems like a classical queueing or bucketing problem.
+- M can be very big. Number of dryers.
+- For Case 1: 1 washer (1200), 1 dryer at (34) and 1 load.
+- For Case 2: 3 washers (100, 10, 1), 2 dryers at (1) and 2 loads.
+    + First load put in to fast washer.
+    + Second load can be put into fast washer sooner than the first load finishes.
+    + Second load waits until first washer is available.
+    + If there were more than 10 loads, then the second washer becomes viable.
+    + There seems to be no dependency on the dryers since they are all same. Just add an additional 1 to all loads? No. Must wait until they are washed.
+- For Case 3: 3 washers (1, 2, 3), 3 dryers (3) and 3 loads.
+    + First load put into 1, Second load put into 2, third load wait for first load then put into 1.
+    + First load done at t = 4
+    + Second load done at t = 5
+    + Third load done at t = 5
+- For Case 4: 2 washers (5, 8), 2 dryers (7) and 4 loads.
+    + At T0, L1 into W1. At T5, W1 free. At T5, L1 into D1. At T12, D1 free.
+    + At T0, L2 into W2. At T8, W2 free. At T8, L2 into D2. At T15, D2 free.
+    + At T5, L3 into W1. At T10, W1 free. At T12, L3 into D1. At T19, D1 free.
+    + At T10, L4 into W1. At T15, W1 free. At T15, L4 into D2. At T22, D2 free.
+- Seems like a greedy algorithm will work? Is there a case where spacing out washing schedule finishes faster than just shortest washing schedule? Probably, otherwise the dryer wouldn't be part of this question.
+- For Case 5: 1 washer (3) and 999 dryers (6) and 999 loads.
+    + T0 first load
+    + T3 second load
+    + T6 third load
+    + T(999 * 3 - 3) 999th load, T(1000 * 3 - 6) start. T(1000 * 3 - 3) done.
+    + T(1000 * 3 - 3) start dryer load. T(1000 * 3 - 3 + 6) done.
+- Sounds like greedily applying washer should work?
+    + For any given load, determine whether to wait on occupied washers (assuming another load has not already scheduled for it already) or to use fastest available washer.
+- For every washer, determine time to completion from T0. Initially it is just work time, after a load has been scheduled it changes to `Wi + Wi`.
+- For each dryer, can do the same but there are a lot more dryers.
+- For washer can maintain a BST, for dryers cannot.
+- After washers, can get a list of washer finish times.
+    + Iterate through load washer finish times.
+    + For each add D time as long as M is not saturated.
+    + 
