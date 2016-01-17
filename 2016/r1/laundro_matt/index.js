@@ -19,8 +19,8 @@ var BinaryMinHeap = function() {
     this.data = []
 }
 
-BinaryMinHeap.prototype.insert = function(value) {
-    this.data.push(value)
+BinaryMinHeap.prototype.insert = function(node) {
+    this.data.push(node)
     this.upHeapify(this.data.length - 1)
 }
 
@@ -28,9 +28,9 @@ BinaryMinHeap.prototype.getRoot = function() {
     return this.data[0]
 }
 
-BinaryMinHeap.prototype.updateRoot = function(value) {
+BinaryMinHeap.prototype.updateRoot = function(node) {
     if (this.data.length) {
-        this.data[0] = value
+        this.data[0] = node
         this.downHeapify(0)
     }
 }
@@ -52,10 +52,10 @@ BinaryMinHeap.prototype.downHeapify = function(index) {
         var leftChild = this.data[leftChildIndex]
         var rightChild = this.data[rightChildIndex]
 
-        if (rightChild < leftChild && rightChild < current) {
+        if (rightChild.cost < leftChild.cost && rightChild.cost < current.cost) {
             this.tradeNodes(index, rightChildIndex)
             this.downHeapify(rightChildIndex)
-        } else if (leftChild < current) {
+        } else if (leftChild.cost < current.cost) {
             // leftChild is smaller or equal to rightChild.
             this.tradeNodes(index, leftChildIndex)
             this.downHeapify(leftChildIndex)
@@ -63,7 +63,7 @@ BinaryMinHeap.prototype.downHeapify = function(index) {
     } else if (leftChildIndex < this.data.length) {
         // Only one child.
         var leftChild = this.data[leftChildIndex]
-        if (leftChild < current) {
+        if (leftChild.cost < current.cost) {
             this.tradeNodes(index, leftChildIndex)
             this.downHeapify(leftChildIndex)
         }
@@ -74,7 +74,7 @@ BinaryMinHeap.prototype.upHeapify = function(index) {
     // [0, 1, 2, 3, 4, 5, 6]
     if (index > 0) {
         var parentIndex = Math.floor((index - 1) / 2)
-        if (this.data[index] < this.data[parentIndex]) {
+        if (this.data[index].cost < this.data[parentIndex].cost) {
             this.tradeNodes(index, parentIndex)
             this.upHeapify(parentIndex)
         }
@@ -97,10 +97,42 @@ while(t < T) {
     var W = lines.shift().split(' ').map(v => parseInt(v, 10))
 
     var h = new BinaryMinHeap();
+    W.forEach(w => (h.insert({cost: w, initial: w})))
 
-    console.log(h)
+    var loadFinishTime = []
 
-    // outputFileData += 'Case #' + t + ': ' + sum + '\n'
+    // Find washer time using greedy strategy.
+    for (var i = 0, ii = L; i < ii; ++i) {
+        var root = h.getRoot()
+
+        loadFinishTime.push(root.cost)
+        // Danger mutation but should be okay.
+        root.cost += root.initial
+        h.updateRoot(root)
+    }
+
+    // console.log(loadFinishTime)
+    var m = 0
+    while (m < loadFinishTime.length) {
+        if (m < M) {
+            loadFinishTime[m] = loadFinishTime[m] + D
+        } else {
+            // For the mth load check the mth - M load
+            var lastLoadFinish = loadFinishTime[m - M]
+
+            if (lastLoadFinish <= loadFinishTime[m]) {
+                var delay = 0
+            } else {
+                var delay = lastLoadFinish - loadFinishTime[m]
+            }
+
+            loadFinishTime[m] = loadFinishTime[m] + D + delay
+        }
+        m += 1
+    }
+
+    var allDoneTime = loadFinishTime[loadFinishTime.length - 1]
+    outputFileData += 'Case #' + t + ': ' + allDoneTime + '\n'
 }
 
-// fs.writeFileSync(path.join(__dirname, outputFileName), outputFileData, 'utf8')
+fs.writeFileSync(path.join(__dirname, outputFileName), outputFileData, 'utf8')
