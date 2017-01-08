@@ -20,7 +20,7 @@ For the ith point, print a line containing "Case #i: " followed by the color of 
 * 1 ≤ T ≤ 1,000 
 * 0 ≤ P, X, Y ≤ 100 
 
-Whenever a point (X, Y) is queried, it's guaranteed that all points within a distance of 10<sup>-6<sup> of (X, Y) are the same color as (X, Y).
+Whenever a point (X, Y) is queried, it's guaranteed that all points within a distance of 10<sup>-6</sup> of (X, Y) are the same color as (X, Y).
 
 ## Explanation of Sample
 In the first case all of the points are white, so the point at (55, 55) is of course white.
